@@ -1,0 +1,131 @@
+{
+  "name": "localhost-manager",
+  "version": "1.0.0",
+  "description": "See which ports are listening, what owns them, and stop them.",
+  "main": "dist-electron/main/index.js",
+  "scripts": {
+    "dev": "concurrently -k -n \"VITE,ELECTRON\" -c \"blue,green\" \"vite\" \"node scripts/dev-electron.js\"",
+    "build": "npm run lint && vite build && node scripts/build-electron.js",
+    "build:electron": "node scripts/build-electron.js",
+    "test": "node -e \"const g=require('fs').readdirSync('tests').filter(f=>f.endsWith('.test.ts'));require('esbuild').buildSync({entryPoints:g.map(f=>'tests/'+f),bundle:true,platform:'node',outdir:'tests/dist',external:['electron']})\" && node --test tests/dist/*.test.js",
+    "lint": "tsc --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "start": "electron dist-electron/main/index.js",
+    "dist": "npm run build && electron-builder --publish never",
+    "dist:mac": "npm run build && electron-builder --mac --publish never",
+    "dist:win": "npm run build && electron-builder --win --publish never",
+    "dist:linux": "npm run build && electron-builder --linux --publish never",
+    "dist:dir": "npm run build && electron-builder --dir --publish never"
+  },
+  "keywords": [
+    "localhost",
+    "ports",
+    "developer-tools",
+    "process-manager",
+    "electron"
+  ],
+  "author": "GDP07",
+  "license": "MIT",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "tailwind-merge": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3",
+    "esbuild": "^0.25.0",
+    "postcss": "^8.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.1"
+  },
+  "productName": "Localhost Manager",
+  "homepage": "./",
+  "private": true,
+  "build": {
+    "appId": "dev.localhostmanager.app",
+    "productName": "Localhost Manager",
+    "copyright": "Copyright \u00a9 GDP07",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "dist-renderer/**/*",
+      "!**/*.map",
+      "!node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "assets",
+        "to": "assets"
+      }
+    ],
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "build/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "LSUIElement": false,
+        "NSAppleEventsUsageDescription": "Localhost Manager opens your terminal in a project directory."
+      }
+    },
+    "dmg": {
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Development",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  }
+}

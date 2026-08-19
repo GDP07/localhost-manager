@@ -1,0 +1,8 @@
+node_modules/
+dist-electron/
+dist-renderer/
+release/
+tests/dist/
+build/icon.iconset/
+*.log
+.DS_Store

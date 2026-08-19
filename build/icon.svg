@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" rx="228" fill="#0C0E13"/>
+  <rect x="8" y="8" width="1008" height="1008" rx="220" fill="none" stroke="#FFFFFF" stroke-opacity="0.09" stroke-width="16"/>
+  <!-- The ":" of ":3000" — the app's brand mark. -->
+  <circle cx="330" cy="404" r="58" fill="#4F8FFF"/>
+  <circle cx="330" cy="620" r="58" fill="#4F8FFF"/>
+  <!-- Three ports, most to least prominent. -->
+  <rect x="470" y="346" width="256" height="72" rx="36" fill="#4F8FFF"/>
+  <rect x="470" y="476" width="212" height="72" rx="36" fill="#4F8FFF" fill-opacity="0.62"/>
+  <rect x="470" y="606" width="150" height="72" rx="36" fill="#4F8FFF" fill-opacity="0.34"/>
+</svg>

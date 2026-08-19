@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Token definitions. Light is the base; `.dark` on <html> swaps the values.
+ * Components reference roles only, so both themes are a single source of truth.
+ * Values are space-separated RGB channels for Tailwind's alpha syntax.
+ */
+@layer base {
+  :root {
+    --canvas: 247 248 250;
+    --surface: 255 255 255;
+    --raised: 255 255 255;
+    --sunken: 242 244 247;
+
+    --line: 226 229 235;
+    --line-strong: 198 203 212;
+
+    --ink: 23 27 34;
+    --muted: 88 96 110;
+    --faint: 118 126 141;
+
+    --accent: 27 92 217;
+    --accent-ink: 255 255 255;
+    --ok: 11 118 74;
+    --warn: 140 90 6;
+    --danger: 194 45 45;
+
+    color-scheme: light;
+  }
+
+  .dark {
+    --canvas: 12 14 19;
+    --surface: 22 25 32;
+    --raised: 30 34 43;
+    --sunken: 8 10 14;
+
+    --line: 38 43 54;
+    --line-strong: 60 67 82;
+
+    --ink: 232 234 240;
+    --muted: 146 154 169;
+    --faint: 103 111 126;
+
+    --accent: 79 143 255;
+    --accent-ink: 255 255 255;
+    --ok: 61 191 132;
+    --warn: 224 165 62;
+    --danger: 240 106 106;
+
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans text-sm antialiased;
+    /* Chrome is not selectable — but data is (see .selectable / code below). */
+    user-select: none;
+    overflow: hidden;
+  }
+
+  /* Anything that is a value rather than a label can be selected and copied. */
+  code,
+  pre,
+  kbd,
+  .selectable {
+    user-select: text;
+    cursor: auto;
+  }
+
+  /* Tabular figures keep metric columns from jittering as values update. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Dialogs receive focus programmatically on open; a ring there is noise, not a cue. */
+  :focus-visible:not([role='dialog']) {
+    @apply outline-none ring-2 ring-accent/60;
+  }
+}
+
+@layer utilities {
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line-strong)) transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--line-strong));
+    border-radius: 9999px;
+    /* Inset the thumb so it reads as a hairline, not a bar. */
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  .titlebar-drag {
+    -webkit-app-region: drag;
+  }
+
+  .titlebar-no-drag {
+    -webkit-app-region: no-drag;
+  }
+}
